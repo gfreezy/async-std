@@ -234,10 +234,10 @@ impl<T: Evented> Watcher<T> {
         let mut readers = self.entry.readers.lock().unwrap();
 
         // Try running the operation again.
-        match f(self.source.as_ref().unwrap()) {
-            Err(err) if err.kind() == io::ErrorKind::WouldBlock => {}
-            res => return Poll::Ready(res),
-        }
+        // match f(self.source.as_ref().unwrap()) {
+        //     Err(err) if err.kind() == io::ErrorKind::WouldBlock => {}
+        //     res => return Poll::Ready(res),
+        // }
 
         // Register the task if it isn't registered already.
         if readers.wakers.iter().all(|w| !w.will_wake(cx.waker())) {
@@ -271,10 +271,10 @@ impl<T: Evented> Watcher<T> {
         let mut writers = self.entry.writers.lock().unwrap();
 
         // Try running the operation again.
-        match f(self.source.as_ref().unwrap()) {
-            Err(err) if err.kind() == io::ErrorKind::WouldBlock => {}
-            res => return Poll::Ready(res),
-        }
+        // match f(self.source.as_ref().unwrap()) {
+        //     Err(err) if err.kind() == io::ErrorKind::WouldBlock => {}
+        //     res => return Poll::Ready(res),
+        // }
 
         // Register the task if it isn't registered already.
         if writers.wakers.iter().all(|w| !w.will_wake(cx.waker())) {
